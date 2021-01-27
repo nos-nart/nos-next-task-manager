@@ -5,6 +5,6 @@ type PageWithMainLayoutType = NextPage & { layout: typeof MainLayout }
 
 type PageWithAuthLayoutType = NextPage & { layout: typeof AuthLayout }
 
-type PageWithLayoutType = PageWithMainLayoutType | PageWithAuthLayoutType
-
+type PageWithLayoutType = PageWithMainLayoutType | PageWithAuthLayoutType;
+ 
 export default PageWithLayoutType;

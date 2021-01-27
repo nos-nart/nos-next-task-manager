@@ -1,6 +1,7 @@
 // import App from "next/app";
 import "tailwindcss/tailwind.css";
 import PageWithLayoutType from '../types/pageWithLayout';
+import { GlobalStyles } from '@/components/index';
 
 type AppLayoutProps = {
   Component: PageWithLayoutType
@@ -11,9 +12,11 @@ function MyApp({ Component, pageProps }: AppLayoutProps) {
   const Layout = Component.layout || ((children: any) => <>{children}</>)
   return (
     <>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <GlobalStyles>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </GlobalStyles>
     </>
   )
 }

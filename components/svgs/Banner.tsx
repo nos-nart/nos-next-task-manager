@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export const Banner: React.FC<{ [key: string]: string | number }> = (props) => (
+export const Banner: React.FC = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M79.91 316.86l-13.75.27-7 .12c-2.33 0-4.67 0-7 .05h-.44v-.44l-.06-11.72v-.51h.5l13.87.06c4.62 0 9.24.11 13.86.16h.28v.27c0 2-.09 4-.13 5.91l-.13 5.83zm0 0l-.14-5.92c0-1.95-.11-3.88-.13-5.8l.27.27c-4.62 0-9.24.16-13.86.16l-13.87.07.5-.5v11.72l-.45-.45h6.86l6.89.12 13.93.33z"
