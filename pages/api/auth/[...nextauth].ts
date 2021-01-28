@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { InitOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
+import User from '@/models/user.model';
 
 const options: InitOptions = {
   pages: {},
@@ -8,17 +9,24 @@ const options: InitOptions = {
     Providers.Credentials({
       name: 'Credentials',
       credentials: {
-        username: { label: "Email", type: "text", placeholder: "your@email.com" },
-        password: {  label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-  
-        if (user) {
-          return user
-        } else {
-          return null
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "your@email.com"
+        },
+        password: {
+          label: "Password",
+          type: "password"
         }
+      },
+      authorize: async (credentials) => {
+        const existingUser = User.findOne({ email: credentials.email });
+
+        if (existingUser.password === credentials.password) {
+          return existingUser.toObject();
+        }
+
+        return null;
       }
     })
   ],

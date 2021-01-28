@@ -19,6 +19,8 @@
       "@/types/*": ["types/*"],
       "@/containers/*": ["containers/*"],
       "@/layouts/*": ["layouts/*"],
+      "@/utils/*": ["utils/*"],
+      "@/models/*": ["models/*"],
     }
   },
   "exclude": ["node_modules"],
