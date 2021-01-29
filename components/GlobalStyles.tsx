@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export const GlobalStyles: React.FC<Props> = ({ children }) => {
+export function GlobalStyles({ children }: Props) {
   return (
     <>
       {children}

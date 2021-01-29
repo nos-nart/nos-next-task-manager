@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export const MainLayout:React.FC<Props> = ({ children }) => {
+export const MainLayout = ({ children }: Props) => {
   return (
     <div>
       <Header title="this is the header" />

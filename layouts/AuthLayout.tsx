@@ -1,15 +1,18 @@
 import React from 'react';
+import { Banner } from '@/components/svgs/Banner';
 
 type Props = {
   children: React.ReactNode
 }
 
-export const AuthLayout:React.FC<Props> = ({ children }) => {
+export const AuthLayout = ({ children }: Props) => {
   return (
     <>
       <div className="w-full h-screen grid grid-cols-2">
-        <div className="w-1/2 cols-span-1 flex justify-end items-center"></div>
-        <div className="w-1/2 cols-span-1 flex justify-center items-center">
+        <div className="cols-span-1 flex justify-end items-center">
+          <Banner width={500} height={500} />
+        </div>
+        <div className="cols-span-1 flex justify-center items-center">
           {children}
         </div>
       </div>

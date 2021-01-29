@@ -3,7 +3,7 @@ type Props = {
   symbol: any;
 };
 
-export const Emoji: React.FC<Props> = ({ label, symbol }) => {
+export function Emoji({ label, symbol }: Props) {
   return (
     <span
       className="emoji"

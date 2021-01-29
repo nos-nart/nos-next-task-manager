@@ -4,7 +4,7 @@ type Props = {
   title: string
 }
 
-export const Header: React.FC<Props> = (props) => {
+export function Header(props: Props) {
   return (
     <>
       <header>
