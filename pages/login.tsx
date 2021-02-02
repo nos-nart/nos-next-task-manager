@@ -4,7 +4,7 @@ import { FormLogin } from '@/containers/index';
 import PageWithLayoutType from '@/types/pageWithLayout';
 import { AuthLayout } from '@/layouts/index';
 
-const Login: React.FC = () => {
+const Login: React.FunctionComponent = () => {
   return (
     <>
       <FormLogin />
