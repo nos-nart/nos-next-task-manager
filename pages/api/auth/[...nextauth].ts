@@ -1,10 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { InitOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
-import User from '@/models/user.model';
+import { User } from '@/utils/db';
+import { serverRuntimeConfig } from '../../../next.config';
 
 const options: InitOptions = {
-  pages: {},
+  pages: {
+    signIn: '/login',
+    signOut: '/register',
+  },
   providers: [
     Providers.Credentials({
       name: 'Credentials',
@@ -30,6 +34,7 @@ const options: InitOptions = {
       }
     })
   ],
+  database: serverRuntimeConfig.databaseUri
 }
 
 export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);

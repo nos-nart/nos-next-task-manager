@@ -1,16 +1,17 @@
-import mongoose from 'mongoose';
+import { Schema, Document, models, model } from 'mongoose';
+import { hash } from 'argon2';
 
 const validateEmail = (email: string): boolean => {
-  var re = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+  var re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gi;
   return re.test(email);
 }
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
   email: string;
   password: string;
 }
 
-export const UserSchema = new mongoose.Schema(
+export const UserSchema: Schema = new Schema(
   {
     email: {
       type: String,
@@ -29,5 +30,9 @@ export const UserSchema = new mongoose.Schema(
   }
 )
 
-const User = mongoose.model<IUser>('User', UserSchema);
-export default User;
+UserSchema.pre('save', async function(this: IUser , next) {
+  const hashPw = await hash(this.password);
+  this.password = hashPw;
+})
+
+module.exports = UserSchema;

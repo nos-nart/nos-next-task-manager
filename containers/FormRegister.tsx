@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import fetch from 'isomorphic-unfetch';
+
 import { FormInput, Button } from '@/components/index';
 
 export const FormRegister = () => {
@@ -11,7 +13,18 @@ export const FormRegister = () => {
   const contentType = 'application/json';
 
   const onSubmit = async (data: any) => {
-    
+    const { email, password } = data;
+
+    const res = await fetch(`/api/register`, {
+      method: 'POST',
+      headers: {
+        Accept: contentType,
+        'Content-Type': contentType,
+      },
+      body: JSON.stringify({ email, password })
+    })
+
+    console.log('res ~> ', res);
   };
 
   return (
