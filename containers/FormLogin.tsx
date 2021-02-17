@@ -1,14 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/router'
+
 import { FormInput, Button } from '@/components/index';
 
-export const FormLogin = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const router = useRouter();
+type FormLoginProps = {
+  csrfToken?: string;
+}
+
+export const FormLogin = ({ csrfToken }: FormLoginProps) => {
   const {register, handleSubmit, errors} = useForm();
-  // console.log('errors: ', errors);
   const contentType = 'application/json';
 
   const onSubmit = async (data: any) => {

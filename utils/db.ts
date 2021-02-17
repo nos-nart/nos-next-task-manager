@@ -1,15 +1,16 @@
-import { UserSchema } from '@/models/user.model';
+import { UserSchema, IUser } from '@/models/user.model';
 import { createConnection } from 'mongoose';
 import { serverRuntimeConfig } from 'next.config';
 
 const db = createConnection(
-  serverRuntimeConfig.databaseUri,
+  serverRuntimeConfig.databaseUrl,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   }
 )
+exports.db = db;
 
 db.on('error', (error) => {
   console.error(`MongoDB connection error ~> ${error}`);
@@ -19,4 +20,5 @@ db.on('error', (error) => {
 exports.connected = new Promise((resolve) => db.once('open', resolve));
 
 // models
-exports.User = db.model('User', UserSchema);
+const User = db.model('User', UserSchema);
+export { User };

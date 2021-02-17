@@ -16,6 +16,7 @@
     "classnames": "^2.2.6",
     "framer-motion": "^3.2.2-rc.1",
     "isomorphic-unfetch": "^3.1.0",
+    "mongodb": "^3.6.4",
     "mongoose": "^5.11.13",
     "next": "10.0.5",
     "postcss": "^8.2.4",

@@ -1,5 +1,4 @@
-import { Schema, Document, models, model } from 'mongoose';
-import { hash } from 'argon2';
+import { Schema, Document } from 'mongoose';
 
 const validateEmail = (email: string): boolean => {
   var re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gi;
@@ -11,7 +10,7 @@ export interface IUser extends Document {
   password: string;
 }
 
-export const UserSchema: Schema = new Schema(
+const UserSchema: Schema = new Schema(
   {
     email: {
       type: String,
@@ -30,9 +29,4 @@ export const UserSchema: Schema = new Schema(
   }
 )
 
-UserSchema.pre('save', async function(this: IUser , next) {
-  const hashPw = await hash(this.password);
-  this.password = hashPw;
-})
-
-module.exports = UserSchema;
+export { UserSchema };

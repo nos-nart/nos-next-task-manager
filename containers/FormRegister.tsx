@@ -23,8 +23,6 @@ export const FormRegister = () => {
       },
       body: JSON.stringify({ email, password })
     })
-
-    console.log('res ~> ', res);
   };
 
   return (

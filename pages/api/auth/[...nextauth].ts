@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { InitOptions } from 'next-auth';
+import { verify } from 'argon2';
 import Providers from 'next-auth/providers';
 import { User } from '@/utils/db';
 import { serverRuntimeConfig } from '../../../next.config';
@@ -9,6 +10,7 @@ const options: InitOptions = {
     signIn: '/login',
     signOut: '/register',
   },
+  session: {},
   providers: [
     Providers.Credentials({
       name: 'Credentials',
@@ -24,9 +26,9 @@ const options: InitOptions = {
         }
       },
       authorize: async (credentials) => {
-        const existingUser = User.findOne({ email: credentials.email });
+        const existingUser = await User.findOne({ email: credentials.email });
 
-        if (existingUser.password === credentials.password) {
+        if (await verify(existingUser.password, credentials.password)) {
           return existingUser.toObject();
         }
 
@@ -34,7 +36,8 @@ const options: InitOptions = {
       }
     })
   ],
-  database: serverRuntimeConfig.databaseUri
+  callbacks: {},
+  database: serverRuntimeConfig.databaseUrl
 }
 
 export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
