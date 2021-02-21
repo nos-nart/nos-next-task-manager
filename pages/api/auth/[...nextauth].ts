@@ -26,7 +26,9 @@ const options: InitOptions = {
         }
       },
       authorize: async (credentials) => {
+        console.log('credentials: ', credentials);
         const existingUser = await User.findOne({ email: credentials.email });
+        console.log('existingUser: ', existingUser);
 
         if (await verify(existingUser.password, credentials.password)) {
           return existingUser.toObject();

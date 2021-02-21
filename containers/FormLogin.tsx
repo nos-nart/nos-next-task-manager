@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
+import fetch from 'isomorphic-unfetch';
 
 import { FormInput, Button } from '@/components/index';
 
@@ -14,12 +15,15 @@ export const FormLogin = ({ csrfToken }: FormLoginProps) => {
 
   const onSubmit = async (data: any) => {
     console.log('data: ', data);
+    const { email, password } = data;
+
   };
 
   return (
     <>
       <div className="w-full max-w-xs">
         <form onSubmit={handleSubmit(onSubmit)}>
+          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <FormInput 
             id="email"
             name="email"
