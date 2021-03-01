@@ -1,11 +1,11 @@
 import React from 'react';
 import { Banner } from '@/components/svgs/Banner';
 
-type Props = {
+type AuthLayoutProps = {
   children: React.ReactNode
 }
 
-export const AuthLayout = ({ children }: Props) => {
+export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <>
       <div className="w-full h-screen grid grid-cols-2">

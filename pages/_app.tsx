@@ -9,14 +9,15 @@ type AppLayoutProps = {
 }
 
 function MyApp({ Component, pageProps }: AppLayoutProps) {
-  const Layout = Component.layout || ((children: any) => <>{children}</>)
+  const Layout = Component.layout || ((children: any) => <>{children}</>);
+
   return (
     <>
-      <GlobalStyles>
+      {/* <GlobalStyles> */}
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </GlobalStyles>
+      {/* </GlobalStyles> */}
     </>
   )
 }

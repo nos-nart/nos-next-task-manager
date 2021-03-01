@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
-import fetch from 'isomorphic-unfetch';
 
 import { FormInput, Button } from '@/components/index';
+import { signIn } from 'next-auth/client';
 
 type FormLoginProps = {
   csrfToken?: string;
@@ -11,12 +11,18 @@ type FormLoginProps = {
 
 export const FormLogin = ({ csrfToken }: FormLoginProps) => {
   const {register, handleSubmit, errors} = useForm();
-  const contentType = 'application/json';
 
   const onSubmit = async (data: any) => {
-    console.log('data: ', data);
     const { email, password } = data;
-
+    signIn('credentials',
+      {
+        email,
+        password,
+        // The page where you want to redirect to after a 
+        // successful login
+        callbackUrl: `${window.location.origin}/` 
+      }
+    )
   };
 
   return (
