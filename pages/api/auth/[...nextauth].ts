@@ -4,6 +4,7 @@ import { verify } from 'argon2';
 import Providers from 'next-auth/providers';
 import { User } from '@/utils/db';
 import { serverRuntimeConfig } from '../../../next.config';
+import { SessionBase } from 'next-auth/_utils';
 
 const providers = [
   Providers.Credentials({
@@ -36,14 +37,14 @@ const providers = [
 const options: InitOptions = {
   providers,
   callbacks: {
-    async jwt(token: any, user: any) {
+    async jwt(token: {[key: string]: any}, user: any) {
       if (user) {
         token.accessToken = user.data.token;
       }
       return token;
     },
-  
-    async session(session: any, token: any) {
+
+    async session(session: SessionBase, token: {[key: string]: any}) {
       session.accessToken = token.accessToken;
       return session;
     }
