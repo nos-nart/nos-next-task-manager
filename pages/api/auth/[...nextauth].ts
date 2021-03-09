@@ -5,41 +5,56 @@ import Providers from 'next-auth/providers';
 import { User } from '@/utils/db';
 import { serverRuntimeConfig } from '../../../next.config';
 
-const options: InitOptions = {
-  pages: {
-    signIn: '/login',
-    signOut: '/register',
-  },
-  session: {},
-  providers: [
-    Providers.Credentials({
-      name: 'Credentials',
-      credentials: {
-        email: {
-          label: "Email",
-          type: "text",
-          placeholder: "your@email.com"
-        },
-        password: {
-          label: "Password",
-          type: "password"
-        }
+const providers = [
+  Providers.Credentials({
+    name: 'Credentials',
+    credentials: {
+      email: {
+        label: "Email",
+        type: "text",
+        placeholder: "your@email.com"
       },
-      authorize: async (credentials) => {
-        try {
-          const existingUser = await User.findOne({ email: credentials.email });
-
-          if (await verify(existingUser.password, credentials.password)) {
-            return existingUser.toObject();
-          }
-          return null;
-        } catch (e) {
-          throw new Error('Something wrong with authorization!');
-        }
+      password: {
+        label: "Password",
+        type: "password"
       }
-    })
-  ],
-  callbacks: {},
+    },
+    authorize: async (credentials) => {
+      try {
+        const existingUser = await User.findOne({ email: credentials.email });
+        if (await verify(existingUser.password, credentials.password)) {
+          return existingUser.toObject();
+        }
+        return null;
+      } catch (e) {
+        throw new Error('Something wrong with authorization!');
+      }
+    }
+  })
+];
+
+const options: InitOptions = {
+  providers,
+  callbacks: {
+    async jwt(token: any, user: any) {
+      if (user) {
+        token.accessToken = user.data.token;
+      }
+      return token;
+    },
+  
+    async session(session: any, token: any) {
+      session.accessToken = token.accessToken;
+      return session;
+    }
+  },
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  pages: {
+    error: '/login', // Changing the error redirect page to our custom login page
+  },
   database: serverRuntimeConfig.databaseUrl
 }
 

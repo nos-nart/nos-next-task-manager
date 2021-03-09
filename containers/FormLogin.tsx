@@ -1,16 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
+import { useRouter } from 'next/router';
 
 import { FormInput, Button } from '@/components/index';
 import { signIn } from 'next-auth/client';
 
-type FormLoginProps = {
-  csrfToken?: string;
-}
-
-export const FormLogin = ({ csrfToken }: FormLoginProps) => {
+export const FormLogin = () => {
+  const router = useRouter();
   const {register, handleSubmit, errors} = useForm();
+  const [email, setEmail] = React.useState<string>('');
+  const [loginError, setLoginError] = React.useState<string>('');
+
+  React.useEffect(() => {
+    if (router.query.error) {
+      setLoginError(router.query.error as string);
+      setEmail(router.query.email as string);
+    }
+  }, [router]);
+
 
   const onSubmit = async (data: any) => {
     const { email, password } = data;
@@ -20,7 +28,7 @@ export const FormLogin = ({ csrfToken }: FormLoginProps) => {
         password,
         // The page where you want to redirect to after a 
         // successful login
-        callbackUrl: `${window.location.origin}/` 
+        callbackUrl: `${window.location.origin}/`,
       }
     )
   };
@@ -29,7 +37,6 @@ export const FormLogin = ({ csrfToken }: FormLoginProps) => {
     <>
       <div className="w-full max-w-xs">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
           <FormInput 
             id="email"
             name="email"
@@ -54,7 +61,7 @@ export const FormLogin = ({ csrfToken }: FormLoginProps) => {
             id="password"
             name="password"
             type="password"
-            label="🔑 Password"
+            label="🔑  Password"
             register={register({
               required: {
                 value: true,

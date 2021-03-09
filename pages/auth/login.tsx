@@ -4,26 +4,19 @@ import { NextPage, NextPageContext  } from 'next';
 import { FormLogin } from '@/containers/index';
 import PageWithLayoutType from '@/types/pageWithLayout';
 import { AuthLayout } from '@/layouts/index';
-import { csrfToken } from 'next-auth/client';
 
 type LoginProps = {
   csrfToken?: string;
 }
 
-const Login: NextPage<LoginProps> = ({ csrfToken }) => {
+const Login: NextPage<LoginProps> = () => {
   return (
     <>
-      <FormLogin csrfToken={csrfToken} />
+      <FormLogin />
     </>
   )
 }
 
 (Login as PageWithLayoutType).layout = AuthLayout;
-
-Login.getInitialProps = async (ctx: NextPageContext) => {
-  return {
-    csrfToken: await csrfToken(ctx) ?? undefined,
-  }
-}
 
 export default Login;
